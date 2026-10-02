@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lam Research 面試準備｜Fresh Graduate 30 題</title>
+<style>
+:root {
+  --bg:#f5f7fb; --card:#fff; --text:#172033; --muted:#667085;
+  --line:#e5e7eb; --accent:#174ea6; --accent2:#eaf2ff;
+  --dark:#111827; --good:#087443;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans TC",Arial,sans-serif;line-height:1.75}
+.container{max-width:1050px;margin:auto;padding:28px 20px 60px}
+.hero{background:linear-gradient(135deg,#102a56,#174ea6);color:#fff;border-radius:20px;padding:38px 34px;margin-bottom:24px;box-shadow:0 12px 35px rgba(23,78,166,.18)}
+.hero h1{font-size:32px;line-height:1.25;margin:0 0 10px}
+.hero p{margin:6px 0;color:#e7efff}
+.badges{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}
+.badge{background:rgba(255,255,255,.13);border:1px solid rgba(255,255,255,.22);padding:5px 10px;border-radius:999px;font-size:13px}
+.nav{position:sticky;top:0;z-index:5;background:rgba(245,247,251,.94);backdrop-filter:blur(8px);padding:10px 0;margin-bottom:20px;border-bottom:1px solid var(--line)}
+.nav a{display:inline-block;margin-right:12px;color:var(--accent);text-decoration:none;font-size:14px}
+.section{margin:34px 0}
+.section h2{font-size:23px;margin:0 0 14px}
+.section h3{font-size:18px;margin:20px 0 8px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px;margin:12px 0;box-shadow:0 3px 12px rgba(16,24,40,.04)}
+.qa{border-left:4px solid var(--accent)}
+.q{font-weight:700;font-size:17px;margin-bottom:8px}
+.a{color:#303846}
+.num{display:inline-flex;width:30px;height:30px;align-items:center;justify-content:center;border-radius:8px;background:var(--accent2);color:var(--accent);font-weight:700;margin-right:8px;font-size:13px}
+.highlight{background:#eef8f2;border-left:4px solid var(--good);padding:16px 18px;border-radius:10px}
+.flow{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:12px 0}
+.flow span{background:#fff;border:1px solid var(--line);padding:7px 12px;border-radius:9px;font-weight:600}
+.arrow{color:var(--accent);font-weight:800}
+table{width:100%;border-collapse:collapse;background:#fff;border:1px solid var(--line);border-radius:12px;overflow:hidden}
+th,td{padding:12px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+th{background:#f1f5f9}
+details{background:#fff;border:1px solid var(--line);border-radius:12px;padding:12px 15px;margin:10px 0}
+summary{cursor:pointer;font-weight:700}
+.source a{color:var(--accent);word-break:break-all}
+.small{font-size:13px;color:var(--muted)}
+footer{margin-top:40px;padding-top:20px;border-top:1px solid var(--line);color:var(--muted);font-size:13px}
+@media(max-width:700px){.hero{padding:28px 22px}.hero h1{font-size:26px}.container{padding:18px 13px 40px}}
+</style>
+</head>
+<body>
+<div class="container">
+
+<section class="hero">
+  <h1>Lam Research 面試準備</h1>
+  <p>Fresh Graduate｜Field Service Engineer / Customer Engineer</p>
+  <p>化工碩士 × CVD × Python × Yield Analysis × Troubleshooting</p>
+  <div class="badges">
+    <span class="badge">30 題面試題</span>
+    <span class="badge">半導體基礎</span>
+    <span class="badge">FSE 情境題</span>
+    <span class="badge">CVD 專案</span>
+    <span class="badge">一分鐘自我介紹</span>
+  </div>
+</section>
+
+<div class="nav">
+  <a href="#core">核心認知</a>
+  <a href="#questions">30 題</a>
+  <a href="#concepts">10 個必背概念</a>
+  <a href="#intro">一分鐘自介</a>
+  <a href="#sources">官方資料</a>
+</div>
+
+<section id="core" class="section">
+<h2>一、面試前先搞懂 Lam</h2>
+<div class="card">
+<h3>一句話</h3>
+<p><strong>Lam Research 是半導體設備與服務供應商</strong>，主要參與晶圓製造中的薄膜沉積、蝕刻、清洗及製程監控等關鍵環節。</p>
+<div class="flow">
+<span>Lam Research</span><span class="arrow">→</span><span>半導體設備</span><span class="arrow">→</span><span>客戶 Fab</span><span class="arrow">→</span><span>晶圓製造</span>
+</div>
+</div>
+<div class="card">
+<h3>你最值得切入的方向：CVD / Deposition</h3>
+<p>你的背景是化工碩士，又做過 CVD Yield Analysis，所以面試時不要把自己包裝成「什麼都懂的半導體新人」，而是清楚說明：<strong>你正在把化工的製程思維延伸到半導體設備。</strong></p>
+</div>
+<div class="highlight">
+<strong>你的核心人設：</strong><br>
+化工背景 → 製程研究 → 問題排查 → CVD Yield Analysis → Python / 統計 → 想從設備現場累積實務能力
+</div>
+</section>
+
+<section id="questions" class="section">
+<h2>二、Lam 面試 30 題</h2>
+<p class="small">回答以「新人但有工程思維」為主，不要假裝自己已經有 Fab 設備經驗。</p>
+<div class="card qa">
+<div class="q"><span class="num">01</span>你知道 Lam Research 是做什麼的嗎？</div>
+<div class="a">Lam Research 是半導體設備商，主要提供晶圓製造相關設備與服務，核心製程包含薄膜沉積、蝕刻、清洗，以及製程監控。我比較有興趣的是 Deposition 和 CVD，因為我的化工背景與 CVD 製程分析專案都跟製程參數及薄膜形成有關。</div>
+</div>
+<div class="card qa">
+<div class="q"><span class="num">02</span>為什麼想加入 Lam？</div>
+<div class="a">我希望自己的第一份工作可以真正接觸半導體設備，而不是只停留在理論。我本身是化工背景，也自己做過 CVD 製程良率分析，所以希望把製程知識進一步延伸到實際設備 troubleshooting。Lam 的工作很接近晶圓廠第一線設備，我認為這是累積半導體實務經驗很好的環境。</div>
+</div>
+<div class="card qa">
+<div class="q"><span class="num">03</span>為什麼不是直接去晶圓廠，而是設備商？</div>
+<div class="a">我希望先從設備端建立扎實的基礎。晶圓廠看到的是整個製程結果，而設備商的工程師需要更深入理解設備本身、異常原因以及如何恢復設備狀態。我覺得這跟我喜歡 troubleshooting、拆解問題的個性很接近。</div>
+</div>
+<div class="card qa">
+<div class="q"><span class="num">04</span>為什麼化工背景想做設備工程師？</div>
+<div class="a">我不認為化工和設備是完全不同的領域。化工訓練讓我熟悉製程、材料、傳質、反應和參數之間的關係，而半導體設備其實也是把這些製程條件穩定地控制在很小的範圍內。我希望把原本的製程基礎延伸到設備端。</div>
+</div>
+<div class="card qa">
+<div class="q"><span class="num">05</span>你對 Lam 哪個技術最有興趣？</div>
+<div class="a">CVD／Deposition。因為我本身就是化工背景，而且畢業後自己做過 CVD Yield Analysis。我對 Temperature、Pressure、Gas Flow、Film Thickness 和 Yield 之間的關係比較有興趣，也希望進一步了解這些製程結果背後實際是由哪些設備模組控制。</div>
+</div>
+<div class="card qa">
+<div class="q"><span class="num">06</span>你知道 Lam 的產品主要應用在哪裡嗎？</div>
+<div class="a">主要是晶圓製造中的關鍵製程，例如薄膜沉積、蝕刻、清洗，以及製程監控。Lam 的設備會直接進入客戶 Fab，協助客戶製造先進半導體。</div>
+</div>
+<div class="card qa">
+<div class="q"><span class="num">07</span>你知道 FSE 在做什麼嗎？</div>
+<div class="a">我理解 FSE 不只是修機器，而是站在客戶現場，負責設備安裝、維護、故障診斷和 troubleshooting，目標是盡快找到問題並降低 downtime，同時也要跟客戶保持良好溝通。</div>
+</div>
+<div class="card qa">
+<div class="q"><span class="num">08</span>你知道 FSE 最重要的能力是什麼？</div>
+<div class="a">我認為是 troubleshooting 和溝通。技術上要能把問題拆解、診斷、隔離；但在客戶現場，也必須讓客戶知道目前發生什麼、正在做什麼以及下一步是什麼。</div>
+</div>
+<div class="card qa">
+<div class="q"><span class="num">09</span>可以接受 Cleanroom 嗎？</div>
+<div class="a">可以。我知道半導體設備工程師很多時間是在 Cleanroom 工作，需要穿著完整防護裝備，而且可能長時間站立、走動或進行設備操作。我對這樣的工作型態有心理準備。</div>
+</div>
+<div class="card qa">
+<div class="q"><span class="num">10</span>可以接受輪班、On-call、出差嗎？</div>
+<div class="a">如果工作安排清楚，我可以配合輪班、on-call 及必要的出差。我知道設備工程不是固定朝九晚五，設備異常可能發生在任何時間。</div>
+</div>
+<div class="card qa">
+<div class="q"><span class="num">11</span>什麼是 CVD？</div>
+<div class="a">CVD 是 Chemical Vapor Deposition，利用氣相反應物在晶圓表面發生反應或分解，形成固態薄膜。</div>
+</div>
+<div class="card qa">
+<div class="q"><span class="num">12</span>CVD 有哪些重要參數？</div>
+<div class="a">Temperature、Pressure、Gas Flow、Process Time。不同製程還可能涉及 RF Power、Gas Ratio、Chamber Condition 等。</div>
+</div>
+<div class="card qa">
+<div class="q"><span class="num">13</span>Pressure 為什麼重要？</div>
+<div class="a">Pressure 會影響氣體分子碰撞、反應物傳輸以及 plasma 或 surface reaction 的狀態，因此可能影響沉積速率、膜厚、均勻性及製程穩定性。</div>
+</div>
+<div class="card qa">
+<div class="q"><span class="num">14</span>Gas Flow 為什麼重要？</div>
+<div class="a">Gas Flow 會影響反應物供應以及不同氣體之間的比例。如果流量不穩定或比例改變，可能造成 deposition rate、film properties 或 uniformity 的變化。</div>
+</div>
+<div class="card qa">
+<div class="q"><span class="num">15</span>Temperature 為什麼重要？</div>
+<div class="a">CVD 的化學反應通常對溫度非常敏感，Temperature 改變可能影響反應速率、沉積速率以及薄膜特性，所以設備的溫度控制穩定性很重要。</div>
+</div>
+<div class="card qa">
+<div class="q"><span class="num">16</span>Deposition 跟 Etch 有什麼差別？</div>
+<div class="a">Deposition 是把材料加上去；Etch 是把不需要的材料移除。Lam 兩個領域都有重要產品。</div>
+</div>
+<div class="card qa">
+<div class="q"><span class="num">17</span>RIE 是什麼？</div>
+<div class="a">Reactive Ion Etching，是利用電漿產生帶電粒子，透過化學反應與離子作用來移除材料的一種蝕刻技術。</div>
+</div>
+<div class="card qa">
+<div class="q"><span class="num">18</span>ALD 和 CVD 有什麼差別？</div>
+<div class="a">CVD 通常是連續的薄膜沉積反應，而 ALD 是透過循序的表面反應，一次控制非常薄的材料層，因此對超薄膜與高深寬比結構具有很好的厚度控制能力。</div>
+</div>
+<div class="card qa">
+<div class="q"><span class="num">19</span>什麼是 Yield？</div>
+<div class="a">Yield 可以理解成符合規格、沒有缺陷或成功完成要求的產品比例。對半導體製造來說，Yield 直接影響製造效率與成本。</div>
+</div>
+<div class="card qa">
+<div class="q"><span class="num">20</span>如果 Yield 突然下降，你會先看什麼？</div>
+<div class="a">我會先確認 Yield 下降的時間點，再比較正常與異常批次，接著看 Temperature、Pressure、Gas Flow 等製程參數是否有變化，再確認是哪一台 Tool、哪個 Recipe 或哪個時間區段集中發生。如果有設備異常，就進一步看 Alarm、Log、PM、Calibration 或維修紀錄。</div>
+</div>
+<div class="card qa">
+<div class="q"><span class="num">21</span>你為什麼做這個 CVD Project？</div>
+<div class="a">因為我的背景是化工，但希望進一步進入半導體，所以我想用一個實際專案把化工製程思維延伸到半導體。我選 CVD 是因為它跟化工的反應、傳質和製程控制很有關聯。</div>
+</div>
+<div class="card qa">
+<div class="q"><span class="num">22</span>你的 CVD Project 做了什麼？</div>
+<div class="a">我分析 500 筆模擬的半導體 CVD 製程資料，包含 Temperature、Pressure、Gas Flow、Film Thickness、Defect、Tool ID 和 Yield。從資料整理開始，做正常／異常批次比較、統計分析、設備差異及時間趨勢分析，最後把結果整理成技術報告和 GitHub Portfolio。</div>
+</div>
+<div class="card qa">
+<div class="q"><span class="num">23</span>你從這個 Project 發現什麼？</div>
+<div class="a">我發現異常批次和正常批次在幾個製程參數上有明顯差異，也看到不同 Tool 的異常率存在差異。因此我沒有直接把某個參數當成 root cause，而是把 Pressure、Temperature 和設備穩定性列為後續調查方向，再思考需要搭配設備 Log、Calibration、PM、CM 等資料驗證。</div>
+</div>
+<div class="card qa">
+<div class="q"><span class="num">24</span>你沒有真正半導體工作經驗，為什麼覺得自己可以？</div>
+<div class="a">我確實還沒有 Fab 現場工作經驗，所以我不會說自己已經具備實際設備 troubleshooting 能力。但我已經透過 CVD 專案開始建立製程分析與問題拆解能力。我希望進入 Lam 後接受完整訓練，把目前的理論與分析能力轉換成真正的設備實務能力。</div>
+</div>
+<div class="card qa">
+<div class="q"><span class="num">25</span>你的 Python 跟 FSE 有什麼關係？</div>
+<div class="a">我不認為 Python 本身就是 FSE 的核心技能，但它讓我習慣用數據看問題。例如設備發生異常時，我會想知道異常發生的時間、頻率、相關參數及前後變化。如果未來有設備 Log 或大量資料，我希望能利用 Python 協助分析，而不是只靠人工逐筆查看。</div>
+</div>
+<div class="card qa">
+<div class="q"><span class="num">26</span>如果設備突然 Alarm，你會怎麼做？</div>
+<div class="a">我會先確認 Alarm code、發生時間及設備目前狀態，了解問題是偶發還是持續發生。接著依照 SOP、manual 和 troubleshooting procedure，把問題範圍逐步縮小，例如確認 electrical、mechanical、vacuum、gas 或 sensor 等相關系統。找到可能原因後再進行 corrective action，最後確認設備恢復後重新驗證，並留下完整紀錄。如果超過自己的能力或權限，我會及時尋求資深工程師協助。</div>
+</div>
+<div class="card qa">
+<div class="q"><span class="num">27</span>如果你找不到問題怎麼辦？</div>
+<div class="a">我不會一直盲目嘗試。我會先確認目前已經排除了哪些可能性，再重新檢查問題定義與資料。如果仍無法判斷，我會整理目前的現象、Log、已做過的檢查和結果，帶著具體資訊向資深工程師請教。</div>
+</div>
+<div class="card qa">
+<div class="q"><span class="num">28</span>如果客戶一直催你，你怎麼辦？</div>
+<div class="a">我會先確認客戶最在意的是設備恢復時間、目前生產影響還是問題原因，然後把目前已確認的狀況、正在排查的項目和下一步清楚說明。即使問題還沒有解決，也會保持資訊透明，不會讓客戶完全不知道目前進度。</div>
+</div>
+<div class="card qa">
+<div class="q"><span class="num">29</span>如果資深工程師告訴你的方法跟你想的不一樣？</div>
+<div class="a">我會先理解他判斷的依據，而不是直接認為自己的方法比較好。因為我目前還是新人，現場經驗一定比不上資深工程師。我會把原因記錄下來，之後再思考這個判斷跟哪些設備現象或數據有關，讓下一次遇到類似問題時能自己處理。</div>
+</div>
+<div class="card qa">
+<div class="q"><span class="num">30</span>為什麼我們應該錄取你？</div>
+<div class="a">我沒有正式的半導體工作經驗，所以我不會把自己包裝成已經很懂設備的人。但我的優勢是學習速度和面對問題的方式。我是化工背景，做過製程研究，也自己完成過 CVD Yield Analysis，代表我是真的有花時間把自己往半導體方向準備，而不是只是因為產業熱門才想進來。如果有機會加入 Lam，我希望從最基本的設備和現場開始學，先把設備原理、troubleshooting 和客戶應對做好，再慢慢把自己的製程分析和數據能力帶進來。我比較期待的是，幾年後遇到設備問題時，我不只是知道怎麼修，而是能理解為什麼會發生、怎麼避免再次發生。</div>
+</div>
+
+</section>
+
+<section id="concepts" class="section">
+<h2>三、面試前一定要背的 10 個概念</h2>
+<table>
+<thead><tr><th>概念</th><th>至少要知道什麼</th></tr></thead>
+<tbody>
+<tr><td><strong>Lam Research</strong></td><td>半導體設備＋服務商</td></tr><tr><td><strong>Deposition</strong></td><td>把材料沉積到 Wafer</td></tr><tr><td><strong>CVD</strong></td><td>利用氣相反應形成薄膜</td></tr><tr><td><strong>Etch</strong></td><td>選擇性移除材料</td></tr><tr><td><strong>Clean</strong></td><td>移除污染、殘留與不需要的材料</td></tr><tr><td><strong>FSE</strong></td><td>現場設備維護＋Troubleshooting＋客戶支援</td></tr><tr><td><strong>Yield</strong></td><td>製程結果／良率</td></tr><tr><td><strong>Troubleshooting</strong></td><td>確認 → 隔離 → Corrective Action → 驗證</td></tr><tr><td><strong>Downtime</strong></td><td>設備停機時間，要盡量降低</td></tr><tr><td><strong>你的優勢</strong></td><td>化工＋CVD＋數據分析＋問題拆解</td></tr>
+</tbody></table>
+
+<div class="card">
+<h3>最重要的 Troubleshooting 邏輯</h3>
+<div class="flow">
+<span>確認現象</span><span class="arrow">→</span>
+<span>隔離問題</span><span class="arrow">→</span>
+<span>Corrective Action</span><span class="arrow">→</span>
+<span>重新驗證</span>
+</div>
+<p>遇到不會的問題，不要硬猜。先整理現象、Alarm、Log、已排除項目與結果，再帶著具體資訊請教資深工程師。</p>
+</div>
+</section>
+
+<section id="intro" class="section">
+<h2>四、一分鐘自我介紹</h2>
+<div class="card">
+<p>您好，我是化學工程碩士畢業，研究期間主要接觸製程優化與實驗 troubleshooting。因為希望往半導體設備發展，畢業後我自己做了一個 CVD Yield Analysis 專案，分析 500 筆製程資料，使用 Python 和統計方法去看 Temperature、Pressure、Gas Flow、Tool variation 和 Yield 的關係。這個過程讓我發現自己很喜歡把一個看起來很模糊的問題拆開，再透過數據和驗證逐步找原因。雖然我目前還沒有實際 Fab 設備經驗，但我希望從 FSE 開始，把目前的製程分析能力轉成真正的設備 troubleshooting 能力。</p>
+</div>
+</section>
+
+<section class="section">
+<h2>五、你的 CVD 專案：面試時怎麼講</h2>
+<div class="card">
+<p><strong>為什麼做？</strong><br>化工背景，希望把製程思維延伸到半導體。</p>
+<p><strong>做了什麼？</strong><br>分析 500 筆 CVD 製程資料，包含 Temperature、Pressure、Gas Flow、Film Thickness、Defect、Tool ID、Yield。</p>
+<p><strong>怎麼分析？</strong><br>Normal / Abnormal 比較、統計分析、Tool 差異、時間趨勢、製程參數分析。</p>
+<p><strong>最重要的工程思維？</strong><br><strong>Correlation 不等於 Root Cause。</strong> 異常參數只能作為後續調查方向，還需要設備 Log、Calibration、PM、CM 等資料驗證。</p>
+</div>
+</section>
+
+<section class="section">
+<h2>六、HR 最想看到的不是「我什麼都會」</h2>
+<div class="card">
+<ul>
+<li>願意學習，而且有實際自學證據。</li>
+<li>遇到問題會拆解，而不是慌張或直接放棄。</li>
+<li>知道自己沒有 Fab 經驗，不過度包裝。</li>
+<li>願意接受 Cleanroom、輪班、On-call 與現場工作。</li>
+<li>能和客戶、資深工程師溝通。</li>
+<li>能把自己的化工與 CVD 經驗接到半導體設備。</li>
+</ul>
+</div>
+<div class="highlight">
+<strong>你的回答核心：</strong><br>
+「我現在不是已經很懂設備，而是我已經證明自己願意學、會拆問題，而且有主動把化工背景往半導體 CVD 延伸。希望進 Lam 後從現場開始，把這些能力轉成真正的設備 troubleshooting 能力。」
+</div>
+</section>
+
+<section id="sources" class="section">
+<h2>七、官方資料</h2>
+<div class="card source">
+<p><strong>Lam Research 官方公司介紹</strong><br>
+<a href="https://www.lamresearch.com/company/company-overview/" target="_blank" rel="noopener">https://www.lamresearch.com/company/company-overview/</a></p>
+<p><strong>Lam Research 製程與產品</strong><br>
+<a href="https://www.lamresearch.com/products/our-processes/" target="_blank" rel="noopener">https://www.lamresearch.com/products/our-processes/</a></p>
+<p><strong>Hsinchu Field Service Engineer 1 職缺</strong><br>
+<a href="https://careers.lamresearch.com/careers/job/1099552405813-field-service-engineer-1-?domain=lamresearch.com" target="_blank" rel="noopener">Lam Careers — Field Service Engineer 1</a></p>
+<p><strong>Equipment Intelligence</strong><br>
+<a href="https://newsroom.lamresearch.com/what-is-equipment-intelligence-semi-101" target="_blank" rel="noopener">Lam Research Newsroom — Equipment Intelligence</a></p>
+</div>
+</section>
+
+<footer>
+<p>用途：Lam Research Fresh Graduate 面試準備筆記。內容重點以目前準備方向為主；實際面試仍應依應徵職缺與面試官追問調整。</p>
+<p>建議練習方式：不要逐字背答案。先記住每題的「邏輯」，再用自己的話回答。</p>
+</footer>
+
+</div>
+</body>
+</html>
