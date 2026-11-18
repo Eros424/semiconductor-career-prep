@@ -321,3 +321,35 @@ main{padding-top:8px;padding-bottom:16px;background:#d9e1ed}
 @media (prefers-reduced-motion: reduce) {
   .app.mode-presentation .story-section.is-active { animation: none; }
 }
+
+/* Fixed design canvas and fit-to-slide presentation content */
+.app.mode-presentation .story-section.is-active {
+  width: min(100%, var(--presentation-max-width));
+  height: min(calc(100svh - 146px), calc(100vw * 9 / 16));
+  padding: 0;
+  overflow: visible;
+  aspect-ratio: var(--presentation-ratio);
+}
+.app.mode-presentation .story-section.is-active .slide-content {
+  --slide-scale: 1;
+  width: 1600px;
+  height: 900px;
+  transform: scale(var(--slide-scale));
+  transform-origin: top left;
+  overflow: visible;
+}
+.app.mode-presentation .story-section.is-active .case-grid,
+.app.mode-presentation .story-section.is-active .hero-grid {
+  width: 100%;
+  max-width: none;
+}
+.app.mode-presentation .story-section.is-active .case-bottom-keywords {
+  width: 100%;
+  max-width: none;
+}
+@media (max-width: 900px) {
+  .app.mode-presentation .story-section.is-active { height: min(calc(100svh - 126px), calc(100vw * 9 / 16)); }
+}
+@media (max-width: 620px) {
+  .app.mode-presentation .story-section.is-active { height: calc(100svh - 116px); aspect-ratio: auto; }
+}
