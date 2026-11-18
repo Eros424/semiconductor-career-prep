@@ -226,3 +226,32 @@ main{padding-top:8px;padding-bottom:16px;background:#d9e1ed}
 .case-bottom-keywords .keyword-card p{margin:9px 0 0;color:#304663!important;font-family:Inter,'Noto Sans TC',sans-serif;font-size:12px;line-height:1.45;max-width:28em}
 @media(max-width:900px){.case-bottom-keywords .keyword-card{min-height:104px;padding-left:15px!important;padding-right:15px!important}}
 @media(max-width:620px){.case-bottom-keywords .keyword-stack{grid-template-columns:1fr}.case-bottom-keywords .keyword-card{min-height:88px;padding:15px 16px!important}}
+
+/* Flexible flow layout for bottom keyword blocks */
+.case-section.has-bottom-procedure {
+  --case-flow-gap: clamp(34px, 5vw, 72px);
+  --case-flow-min-height: max(100svh, 760px);
+  display: grid;
+  grid-template-rows: auto auto;
+  row-gap: var(--case-flow-gap);
+  align-content: start;
+  min-height: var(--case-flow-min-height);
+}
+.case-section.has-bottom-procedure .case-bottom-keywords {
+  grid-column: 1 / -1;
+  width: 100%;
+  max-width: none;
+  margin: 0;
+}
+.case-section.has-bottom-procedure .case-bottom-keywords .keyword-stack {
+  overflow: visible;
+}
+@media (max-width: 900px) {
+  .case-section.has-bottom-procedure {
+    display: block;
+    min-height: auto;
+  }
+  .case-section.has-bottom-procedure .case-bottom-keywords {
+    margin-top: var(--case-flow-gap);
+  }
+}
