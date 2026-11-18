@@ -5,14 +5,28 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { capabilityDetails, chapters, keywords, teamKeywords } from './data/story'
 
 gsap.registerPlugin(ScrollTrigger)
-type Mode = 'explore' | 'presentation'
+type Mode = 'scroll' | 'presentation'
 
 function App() {
-  const [mode, setMode] = useState<Mode>('explore')
+  const [mode, setMode] = useState<Mode>('scroll')
   const [activeChapter, setActiveChapter] = useState(0)
   const [capability, setCapability] = useState<keyof typeof capabilityDetails>('systems')
   const sectionRefs = useRef<Record<string, HTMLElement | null>>({})
   const navigating = useRef(false)
+
+  const changeMode = (nextMode: Mode) => {
+    setMode(nextMode)
+    window.requestAnimationFrame(() => {
+      if (nextMode === 'scroll') {
+        sectionRefs.current[chapters[activeChapter]?.id]?.scrollIntoView({ block: 'start', behavior: 'auto' })
+      }
+    })
+  }
+
+  const toggleFullscreen = () => {
+    if (!document.fullscreenElement) document.documentElement.requestFullscreen?.()
+    else document.exitFullscreen?.()
+  }
 
   useEffect(() => {
     const sections = chapters.map((chapter) => sectionRefs.current[chapter.id]).filter(Boolean) as HTMLElement[]
@@ -41,6 +55,8 @@ function App() {
   useEffect(() => {
     const onKey = (event: KeyboardEvent) => {
       if (mode !== 'presentation') return
+      const target = event.target as HTMLElement | null
+      if (target && ['INPUT', 'TEXTAREA', 'SELECT'].includes(target.tagName)) return
       if (event.key === 'ArrowRight' || event.key === 'ArrowDown' || event.key === 'PageDown') { event.preventDefault(); goToChapter(Math.min(activeChapter + 1, chapters.length - 1)) }
       if (event.key === 'ArrowLeft' || event.key === 'ArrowUp' || event.key === 'PageUp') { event.preventDefault(); goToChapter(Math.max(activeChapter - 1, 0)) }
       if (event.key === 'Home') { event.preventDefault(); goToChapter(0) }
@@ -54,11 +70,11 @@ function App() {
 
   return <div className={`app mode-${mode}`}>
     <a className="skip-link" href="#story">Skip to story</a>
-    <header className={`topbar ${activeChapter > 0 ? 'is-compact' : ''}`}><a className="brand" href="#intro" onClick={(event) => { event.preventDefault(); goToChapter(0) }}><span className="brand-mark">RPB</span><span>Engineering portfolio</span></a><div className="mode-toggle" role="group" aria-label="View mode"><button type="button" className={mode === 'explore' ? 'active' : ''} onClick={() => setMode('explore')}>Explore</button><button type="button" className={mode === 'presentation' ? 'active' : ''} onClick={() => setMode('presentation')}>Presentation <span className="key-hint">⌘ 5 min</span></button></div></header>
+    <header className={`topbar ${activeChapter > 0 ? 'is-compact' : ''}`}><a className="brand" href="#intro" onClick={(event) => { event.preventDefault(); goToChapter(0) }}><span className="brand-mark">RPB</span><span>Engineering portfolio</span></a><div className="mode-toggle" role="group" aria-label="View mode"><button type="button" className={mode === 'scroll' ? 'active' : ''} onClick={() => changeMode('scroll')}>Scroll</button><button type="button" className={mode === 'presentation' ? 'active' : ''} onClick={() => changeMode('presentation')}>Presentation <span className="key-hint">⌘ 5 min</span></button></div></header>
     <nav className="chapter-rail" aria-label="Keyword index">{chapters.map((chapter, index) => <button key={chapter.id} className={index === activeChapter ? 'rail-item active' : 'rail-item'} onClick={() => goToChapter(index)} aria-label={`Go to ${chapter.label}`}><span>{chapter.number}</span><i /></button>)}</nav>
-    {mode === 'presentation' && <PresentationBar activeChapter={activeChapter} onPrevious={() => goToChapter(Math.max(0, activeChapter - 1))} onNext={() => goToChapter(Math.min(chapters.length - 1, activeChapter + 1))} />}
+    {mode === 'presentation' && <PresentationBar activeChapter={activeChapter} onPrevious={() => goToChapter(Math.max(0, activeChapter - 1))} onNext={() => goToChapter(Math.min(chapters.length - 1, activeChapter + 1))} onFullscreen={toggleFullscreen} />}
     <main id="story">
-      <section id="intro" ref={setRef('intro')} className={`story-section hero-section ${activeChapter === 0 ? 'is-active' : ''}`} aria-labelledby="intro-title"><div className="hero-grid"><div className="hero-copy"><p className="eyebrow reveal"><span>01</span> Start here</p><h1 id="intro-title" className="hero-title reveal">From research<br /><em>to engineering.</em></h1><p className="hero-lede reveal">Two short STAR cases. One method: change one factor, observe the response, and make the next step clear.</p><div className="hero-actions reveal"><button className="button button-primary" type="button" onClick={() => goToChapter(1)}>Enter the cases <span>↘</span></button><button className="text-button" type="button" onClick={() => setMode('presentation')}>Start 5 min presentation <span>→</span></button></div></div><div className="intro-panel reveal"><span className="eyebrow">Two cases</span><div><strong>01</strong><span>Overflow</span><small>stabilize the experiment</small></div><div><strong>02</strong><span>Team success</span><small>help a project move</small></div><p>Click the chapter rail or start Presentation Mode when you are ready to speak.</p></div></div></section>
+      <section id="intro" ref={setRef('intro')} className={`story-section hero-section ${activeChapter === 0 ? 'is-active' : ''}`} aria-labelledby="intro-title"><div className="hero-grid"><div className="hero-copy"><p className="eyebrow reveal"><span>01</span> Start here</p><h1 id="intro-title" className="hero-title reveal">From research<br /><em>to engineering.</em></h1><p className="hero-lede reveal">Two short STAR cases. One method: change one factor, observe the response, and make the next step clear.</p><div className="hero-actions reveal"><button className="button button-primary" type="button" onClick={() => goToChapter(1)}>Enter the cases <span>↘</span></button><button className="text-button" type="button" onClick={() => changeMode('presentation')}>Start 5 min presentation <span>→</span></button></div></div><div className="intro-panel reveal"><span className="eyebrow">Two cases</span><div><strong>01</strong><span>Overflow</span><small>stabilize the experiment</small></div><div><strong>02</strong><span>Team success</span><small>help a project move</small></div><p>Click the chapter rail or start Presentation Mode when you are ready to speak.</p></div></div></section>
       <CaseSection active={activeChapter === 1} id="overflow-task" refCallback={setRef('overflow-task')} image="/images/overflow-compare.png" chapter="02 / Overflow · Situation + Task" title="The system had to become stable." text="I changed the packing structure while keeping the flow conditions fixed. The task was to understand why the same setup behaved differently." rightPlacement="bottom" right={<KeywordCards items={[{ label: 'Change', text: 'Different packing structures' }, { label: 'Keep fixed', text: 'Flow and other conditions' }, { label: 'Observe', text: 'When overflow appears' }]} />} />
       <CaseSection active={activeChapter === 2} id="overflow-action" refCallback={setRef('overflow-action')} dark image="/images/diagnostic-loop.png" chapter="03 / Overflow · Action" title="Observe. Identify. Verify." text="I used a simple control loop instead of changing many things at once." rightPlacement="under-image" right={<KeywordCards items={keywords.map((item) => ({ label: item.label, text: item.text }))} numbered />}><ResultButtons /></CaseSection>
       <CaseSection active={activeChapter === 3} id="overflow-result" refCallback={setRef('overflow-result')} blue image="/images/rpb-system.png" chapter="04 / Overflow · Result" title="The overflow disappeared." text="After I adjusted the liquid flow in the same overflow-prone experiment, the overflow stopped. I then treated flow as a control variable and continued the comparison." rightPlacement="bottom" right={<KeywordCards items={[{ label: 'Before', text: 'Overflow under the original setting' }, { label: 'Change', text: 'Adjust liquid flow' }, { label: 'After', text: 'A more stable operating range' }]} numbered />} />
@@ -69,8 +85,8 @@ function App() {
   </div>
 }
 
-function PresentationBar({ activeChapter, onPrevious, onNext }: { activeChapter: number; onPrevious: () => void; onNext: () => void }) {
-  return <div className="presentation-bar"><button type="button" onClick={onPrevious} aria-label="Previous chapter">←</button><span><strong>{String(activeChapter + 1).padStart(2, '0')}</strong> / 07 · {chapters[activeChapter].label}</span><div className="presentation-progress"><i style={{ width: `${((activeChapter + 1) / chapters.length) * 100}%` }} /></div><button type="button" onClick={onNext} aria-label="Next chapter">→</button></div>
+function PresentationBar({ activeChapter, onPrevious, onNext, onFullscreen }: { activeChapter: number; onPrevious: () => void; onNext: () => void; onFullscreen: () => void }) {
+  return <div className="presentation-bar"><button type="button" onClick={onPrevious} aria-label="Previous chapter">←</button><span><strong>{String(activeChapter + 1).padStart(2, '0')}</strong> / 07 · {chapters[activeChapter].label}</span><div className="presentation-progress"><i style={{ width: `${((activeChapter + 1) / chapters.length) * 100}%` }} /></div><button type="button" onClick={onNext} aria-label="Next chapter">→</button><button type="button" onClick={onFullscreen} aria-label="Toggle fullscreen">⛶</button></div>
 }
 
 function CaseSection({ active, id, refCallback, image, hideImage, chapter, title, text, right, rightPlacement = 'bottom', dark, blue, cream, children }: { active: boolean; id: string; refCallback: (node: HTMLElement | null) => void; image?: string; hideImage?: boolean; chapter: string; title: string; text: string; right: ReactNode; rightPlacement?: 'bottom' | 'under-image'; dark?: boolean; blue?: boolean; cream?: boolean; children?: ReactNode }) {

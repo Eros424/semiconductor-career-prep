@@ -255,3 +255,69 @@ main{padding-top:8px;padding-bottom:16px;background:#d9e1ed}
     margin-top: var(--case-flow-gap);
   }
 }
+
+/* Shared presentation stage */
+:root {
+  --presentation-ratio: 16 / 9;
+  --presentation-max-width: 1440px;
+  --presentation-transition: .35s;
+}
+.app.mode-presentation {
+  min-height: 100svh;
+  background: #d9e1ed;
+}
+.app.mode-presentation main {
+  min-height: 100svh;
+  height: 100svh;
+  overflow: hidden;
+  padding: clamp(70px, 7vw, 104px) clamp(12px, 3vw, 44px) 72px;
+  display: grid;
+  place-items: center;
+}
+.app.mode-presentation .story-section {
+  display: none;
+}
+.app.mode-presentation .story-section.is-active {
+  display: block;
+  width: min(100%, var(--presentation-max-width));
+  height: min(calc(100svh - 146px), calc(100vw * 9 / 16));
+  min-height: 0;
+  aspect-ratio: var(--presentation-ratio);
+  overflow: auto;
+  margin: 0 auto;
+  padding: clamp(44px, 6vw, 112px) clamp(22px, 7vw, 132px) clamp(38px, 5vw, 92px);
+  scroll-behavior: auto;
+  animation: presentation-in var(--presentation-transition) ease both;
+}
+.app.mode-presentation .story-section.is-active .case-grid {
+  min-height: 0;
+}
+.app.mode-presentation .case-section.has-bottom-procedure {
+  min-height: 0;
+  height: min(calc(100svh - 146px), calc(100vw * 9 / 16));
+}
+.app.mode-presentation .chapter-rail { display: none; }
+.app.mode-presentation .topbar { mix-blend-mode: normal; }
+@keyframes presentation-in {
+  from { opacity: 0; transform: scale(.985); }
+  to { opacity: 1; transform: scale(1); }
+}
+@media (max-width: 900px) {
+  .app.mode-presentation .story-section.is-active {
+    height: min(calc(100svh - 126px), calc(100vw * 9 / 16));
+    padding: 44px 36px 32px;
+  }
+  .app.mode-presentation .case-section.has-bottom-procedure { height: min(calc(100svh - 126px), calc(100vw * 9 / 16)); }
+}
+@media (max-width: 620px) {
+  .app.mode-presentation main { padding: 52px 10px 64px; }
+  .app.mode-presentation .story-section.is-active {
+    height: calc(100svh - 116px);
+    aspect-ratio: auto;
+    padding: 34px 20px 28px;
+  }
+  .app.mode-presentation .case-section.has-bottom-procedure { height: calc(100svh - 116px); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .app.mode-presentation .story-section.is-active { animation: none; }
+}
