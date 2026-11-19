@@ -546,3 +546,90 @@ main{padding-top:8px;padding-bottom:16px;background:#d9e1ed}
   opacity: 1;
   filter: none;
 }
+
+/* Applied option C: classic typography and stacked story cards */
+:root {
+  --display: 'Cormorant Garamond', Georgia, serif;
+  --mono: 'Courier New', monospace;
+}
+.hero-title,
+.case-title,
+.closing-transfer h3 {
+  font-family: var(--display);
+  font-weight: 600;
+  letter-spacing: -.055em;
+  line-height: .88;
+}
+.case-text,
+.case-bottom-keywords .keyword-card p,
+.case-procedure .keyword-card p {
+  font-family: 'Source Sans 3', 'Helvetica Neue', sans-serif;
+  line-height: 1.6;
+}
+.case-bottom-keywords .keyword-stack,
+.case-procedure .keyword-stack {
+  grid-template-columns: 1fr;
+  gap: 10px;
+  border-radius: 0;
+  background: transparent;
+}
+.case-bottom-keywords .keyword-card,
+.case-procedure .keyword-card {
+  min-height: 88px;
+  padding: 15px 18px !important;
+  border: 1px solid var(--blue) !important;
+  border-left: 5px solid var(--blue) !important;
+  border-radius: 12px !important;
+  background: #fff !important;
+  box-shadow: 3px 3px 0 rgba(36,101,197,.1) !important;
+}
+.case-bottom-keywords .keyword-card > span,
+.case-procedure .keyword-card > span,
+.result-buttons button span {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: .12em;
+}
+.case-bottom-keywords .keyword-card strong,
+.case-procedure .keyword-card strong {
+  font-family: var(--display);
+  font-size: 20px;
+  line-height: 1;
+  letter-spacing: -.025em;
+}
+.case-bottom-keywords .keyword-card p,
+.case-procedure .keyword-card p {
+  font-size: 13px;
+  line-height: 1.45;
+  margin-top: 8px;
+}
+.case-procedure .keyword-card:not(:last-child)::after {
+  content: '↓';
+  right: auto;
+  top: auto;
+  bottom: -14px;
+  left: 50%;
+  transform: translateX(-50%);
+  color: var(--gold);
+}
+.section-dark .case-procedure .keyword-card,
+.section-blue .case-procedure .keyword-card {
+  background: #132b51 !important;
+  border-color: #6e8bb4 !important;
+  border-left-color: var(--gold) !important;
+}
+.section-dark .case-procedure .keyword-card strong,
+.section-blue .case-procedure .keyword-card strong {
+  color: #fff;
+}
+.section-dark .case-procedure .keyword-card p,
+.section-blue .case-procedure .keyword-card p {
+  color: #edf3fb;
+}
+@media (max-width: 620px) {
+  .case-bottom-keywords .keyword-card,
+  .case-procedure .keyword-card {
+    min-height: 84px;
+    padding: 14px 16px !important;
+  }
+}
