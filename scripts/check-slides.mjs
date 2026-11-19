@@ -2,6 +2,7 @@ import { chromium } from 'playwright'
 import fs from 'node:fs/promises'
 
 const url = process.env.SLIDES_URL || 'http://127.0.0.1:4173/'
+const channel = process.env.PW_CHANNEL
 const viewports = [
   { width: 1920, height: 1080 },
   { width: 1440, height: 900 },
@@ -13,7 +14,7 @@ const tolerance = 2
 
 let browser
 try {
-  browser = await chromium.launch({ headless: true })
+  browser = await chromium.launch(channel ? { channel, headless: false } : { headless: true })
 } catch (error) {
   console.error('Playwright browser is unavailable. Run `npx playwright install` on a supported host before running this check.')
   console.error(error.message)
