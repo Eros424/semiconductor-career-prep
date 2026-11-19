@@ -285,11 +285,14 @@ main{padding-top:8px;padding-bottom:16px;background:#d9e1ed}
   .app.mode-presentation .story-section.is-active {
     display: flex;
     width: auto;
-    height: auto;
-    min-height: calc(100svh - 48px);
+    height: calc(100svh - 48px);
+    min-height: 0;
     aspect-ratio: auto;
     overflow: visible;
     margin: 0 auto 18px;
+    padding: 0;
+    display: grid;
+    place-items: center;
     scroll-snap-align: start;
     scroll-snap-stop: normal;
     transform: none;
@@ -298,15 +301,29 @@ main{padding-top:8px;padding-bottom:16px;background:#d9e1ed}
 
   .app.mode-presentation .story-section .slide-content,
   .app.mode-presentation .story-section.is-active .slide-content {
-    width: 100%;
-    height: auto;
-    transform: none;
+    width: 1600px;
+    height: 900px;
+    max-width: none;
+    min-height: 0;
+    transform: scale(var(--presentation-scale, 1));
+    transform-origin: center center;
     overflow: visible;
   }
 
   .app.mode-presentation .case-section.has-bottom-procedure {
-    min-height: calc(100svh - 48px);
-    height: auto;
+    min-height: 0;
+    height: calc(100svh - 48px);
+  }
+
+  .app.mode-presentation .story-section .case-grid,
+  .app.mode-presentation .story-section .hero-grid {
+    width: 100%;
+    max-width: none;
+  }
+
+  .app.mode-presentation .story-section .case-bottom-keywords {
+    width: 100%;
+    max-width: none;
   }
 
   .app.mode-presentation #team-result .slide-content {

@@ -40,14 +40,15 @@
   })
 
   const inspectSlide = (slide) => {
-    const frame = rect(slide)
     const content = slide.querySelector(CONTENT_SELECTOR)
+    const slot = rect(slide)
+    const frame = content ? rect(content) : slot
     const styles = getComputedStyle(slide)
     const ratio = frame.width && frame.height ? frame.width / frame.height : null
     const frameIssues = []
     if (ratio && Math.abs(ratio - EXPECTED_RATIO) > RATIO_TOLERANCE) frameIssues.push(`比例 ${ratio.toFixed(3)}，與 16:9 差異超過容許值`)
-    if (styles.position === 'fixed') frameIssues.push('Slide 使用 position: fixed')
-    if (styles.overflow === 'hidden' || styles.overflowY === 'hidden' || styles.overflowX === 'hidden') frameIssues.push('Slide 使用 overflow hidden，需人工確認是否遮住內容')
+    if (styles.position === 'fixed') frameIssues.push('Slide Slot 使用 position: fixed')
+    if (styles.overflow === 'hidden' || styles.overflowY === 'hidden' || styles.overflowX === 'hidden') frameIssues.push('Slide Slot 使用 overflow hidden，需人工確認是否遮住內容')
 
     const elements = [...slide.querySelectorAll(IMPORTANT_SELECTOR)].map((element) => {
       const elementRect = rect(element)
@@ -65,13 +66,14 @@
       }
     })
 
-    const viewportOffset = { top: frame.top, bottom: innerHeight - frame.bottom, left: frame.left, right: innerWidth - frame.right }
+    const viewportOffset = { top: slot.top, bottom: innerHeight - slot.bottom, left: slot.left, right: innerWidth - slot.right }
     const slideScale = transformScale(slide)
     const scaleCount = slideScale.filter(({ transform }) => /matrix\([^)]*,[^)]*,[^)]*,/.test(transform)).length
     if (scaleCount > 1) frameIssues.push(`偵測到 ${scaleCount} 層 transform，可能存在雙重縮放`)
 
     return {
       id: slide.id,
+      slot,
       frame,
       ratio,
       viewportOffset,

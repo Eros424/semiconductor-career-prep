@@ -97,6 +97,26 @@ function App() {
     }
   }, [mode])
 
+  useEffect(() => {
+    const root = document.documentElement
+    const updateScale = () => {
+      if (mode !== 'presentation' || !window.matchMedia('(min-width: 901px)').matches) {
+        root.style.removeProperty('--presentation-scale')
+        return
+      }
+      const availableWidth = window.innerWidth - 36
+      const availableHeight = window.innerHeight - 48
+      const scale = Math.min(availableWidth / 1600, availableHeight / 900, 1)
+      root.style.setProperty('--presentation-scale', String(Math.max(scale, 0.1)))
+    }
+    updateScale()
+    window.addEventListener('resize', updateScale)
+    return () => {
+      window.removeEventListener('resize', updateScale)
+      root.style.removeProperty('--presentation-scale')
+    }
+  }, [mode])
+
   const goToChapter = (index: number) => {
     const chapter = chapters[index]
     const section = chapter && sectionRefs.current[chapter.id]
