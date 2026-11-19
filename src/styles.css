@@ -308,6 +308,7 @@ main{padding-top:8px;padding-bottom:16px;background:#d9e1ed}
     transform: scale(var(--presentation-scale, 1));
     transform-origin: center center;
     overflow: visible;
+    padding: 64px 96px;
   }
 
   .app.mode-presentation .case-section.has-bottom-procedure {
@@ -324,6 +325,43 @@ main{padding-top:8px;padding-bottom:16px;background:#d9e1ed}
   .app.mode-presentation .story-section .case-bottom-keywords {
     width: 100%;
     max-width: none;
+  }
+
+  .app.mode-presentation .case-section.has-bottom-procedure .slide-content {
+    display: grid;
+    grid-template-rows: minmax(0, 1fr) auto;
+    row-gap: 28px;
+  }
+
+  .app.mode-presentation .case-section.has-bottom-procedure .case-bottom-keywords .keyword-stack {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 14px;
+  }
+
+  .app.mode-presentation .case-section.has-bottom-procedure .case-bottom-keywords .keyword-card {
+    min-height: 0;
+    padding: 14px 16px !important;
+  }
+
+  .app.mode-presentation .case-section:not(.has-bottom-procedure) .case-image {
+    max-height: 360px;
+    object-fit: contain;
+  }
+
+  .app.mode-presentation .case-section:not(.has-bottom-procedure) .case-procedure {
+    margin-top: 20px;
+    padding-top: 10px;
+  }
+
+  .app.mode-presentation .case-section:not(.has-bottom-procedure) .case-procedure .keyword-stack {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+  }
+
+  .app.mode-presentation .case-section:not(.has-bottom-procedure) .case-procedure .keyword-card {
+    min-height: 0;
+    padding: 12px 14px !important;
   }
 
   .app.mode-presentation #team-result .slide-content {

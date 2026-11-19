@@ -111,6 +111,11 @@
   }
 
   window.runSlideDiagnostics = async ({ autoScroll = false, downloadJson = false, settleMs = 350 } = {}) => {
+    if (document.fonts?.ready) await document.fonts.ready
+    await Promise.all([...document.images].filter((image) => !image.complete).map((image) => new Promise((resolve) => {
+      image.addEventListener('load', resolve, { once: true })
+      image.addEventListener('error', resolve, { once: true })
+    })))
     const slides = [...document.querySelectorAll(SLIDE_SELECTOR)]
     if (autoScroll) {
       for (const slide of slides) {
