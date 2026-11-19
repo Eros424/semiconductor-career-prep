@@ -11,6 +11,7 @@ const presentationTitles = ['Start Here', 'Overflow · Task', 'Overflow · Actio
 function App() {
   const [mode, setMode] = useState<Mode>('scroll')
   const [activeChapter, setActiveChapter] = useState(0)
+  const [isFullscreen, setIsFullscreen] = useState(false)
   const [capability, setCapability] = useState<keyof typeof capabilityDetails>('systems')
   const sectionRefs = useRef<Record<string, HTMLElement | null>>({})
   const navigating = useRef(false)
@@ -37,9 +38,16 @@ function App() {
   }
 
   const toggleFullscreen = () => {
-    if (!document.fullscreenElement) document.documentElement.requestFullscreen?.()
-    else document.exitFullscreen?.()
+    if (!document.fullscreenEnabled) return
+    if (!document.fullscreenElement) document.documentElement.requestFullscreen?.().catch(() => undefined)
+    else document.exitFullscreen?.().catch(() => undefined)
   }
+
+  useEffect(() => {
+    const onFullscreenChange = () => setIsFullscreen(Boolean(document.fullscreenElement))
+    document.addEventListener('fullscreenchange', onFullscreenChange)
+    return () => document.removeEventListener('fullscreenchange', onFullscreenChange)
+  }, [])
 
   useEffect(() => {
     const sections = chapters.map((chapter) => sectionRefs.current[chapter.id]).filter(Boolean) as HTMLElement[]
@@ -166,11 +174,10 @@ function App() {
 
   return <div className={`app mode-${mode}`}>
     <a className="skip-link" href="#story">Skip to story</a>
-    <header className={`topbar ${activeChapter > 0 ? 'is-compact' : ''}`}><a className="brand" href="#intro" onClick={(event) => { event.preventDefault(); goToChapter(0) }}><span className="brand-mark">RPB</span><span>Engineering portfolio</span></a><div className="mode-toggle" role="group" aria-label="View mode"><button type="button" className={mode === 'scroll' ? 'active' : ''} onClick={() => changeMode('scroll')}>Scroll</button><button type="button" className={mode === 'presentation' ? 'active' : ''} onClick={() => changeMode('presentation')}>Presentation </button></div></header>
+    <header className={`topbar ${activeChapter > 0 ? 'is-compact' : ''}`}><a className="brand" href="#intro" onClick={(event) => { event.preventDefault(); goToChapter(0) }}><span className="brand-mark">RPB</span><span>Engineering portfolio</span></a><div className="topbar-actions"><div className="mode-toggle" role="group" aria-label="View mode"><button type="button" className={mode === 'scroll' ? 'active' : ''} onClick={() => changeMode('scroll')}>Scroll</button><button type="button" className={mode === 'presentation' ? 'active' : ''} onClick={() => changeMode('presentation')}>Presentation </button></div><button className="fullscreen-toggle" type="button" onClick={toggleFullscreen} disabled={!document.fullscreenEnabled} aria-label={isFullscreen ? 'Exit fullscreen' : 'Enter fullscreen'} title={document.fullscreenEnabled ? (isFullscreen ? 'Exit fullscreen' : 'Enter fullscreen') : 'Fullscreen is not supported in this browser'}>{isFullscreen ? '×' : '⛶'}</button></div></header>
     <nav className={`chapter-rail ${mode === 'presentation' ? 'is-presentation' : ''}`} aria-label="Chapter navigation">
       <div key={activeChapter} className="chapter-current-title" aria-live="polite">{presentationTitles[activeChapter]}</div>
       <div className="chapter-dots">{chapters.map((chapter, index) => <button key={chapter.id} className={index === activeChapter ? 'rail-item active' : 'rail-item'} onClick={() => goToChapter(index)} aria-label={`Go to ${presentationTitles[index]}`} aria-current={index === activeChapter ? 'step' : undefined}><span>{chapter.number}</span><i /></button>)}</div>
-      {mode === 'presentation' && <div className="chapter-controls"><button type="button" onClick={() => goToChapter(Math.max(0, activeChapter - 1))} aria-label="Previous chapter">↑</button><button type="button" onClick={() => goToChapter(Math.min(chapters.length - 1, activeChapter + 1))} aria-label="Next chapter">↓</button><button type="button" onClick={toggleFullscreen} aria-label="Toggle fullscreen">⛶</button></div>}
     </nav>
     <main id="story">
       <section id="intro" ref={setRef('intro')} className={`story-section hero-section ${activeChapter === 0 ? 'is-active' : ''}`} aria-labelledby="intro-title"><div className="slide-content"><div className="hero-grid"><div className="hero-copy"><p className="eyebrow reveal"><span>01</span> Start here</p><h1 id="intro-title" className="hero-title reveal">From research<br /><em>to engineering.</em></h1><p className="hero-lede reveal">Two short STAR cases. One method: change one factor, observe the response, and make the next step clear.</p><div className="hero-actions reveal"><button className="button button-primary" type="button" onClick={() => goToChapter(1)}>Enter the cases <span>↘</span></button><button className="text-button" type="button" onClick={() => changeMode('presentation')}>Start 5 min presentation <span>→</span></button></div></div><div className="intro-panel reveal"><span className="eyebrow">Two cases</span><button className="case-entry case-entry-overflow" type="button" onClick={() => goToChapter(1)}><strong>01</strong><span>Overflow</span><small>Stabilize the experiment</small><i aria-hidden="true">↗</i></button><button className="case-entry case-entry-team" type="button" onClick={() => goToChapter(4)}><strong>02</strong><span>Team success</span><small>Help a project move</small><i aria-hidden="true">↗</i></button><p>Click a case or start Presentation Mode when you are ready to speak.</p></div></div></div></section>

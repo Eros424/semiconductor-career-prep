@@ -388,10 +388,11 @@ main{padding-top:8px;padding-bottom:16px;background:#d9e1ed}
   width: 128px;
   gap: 12px;
   align-items: stretch;
-  padding: 12px 10px;
-  border: 1px solid rgba(11,30,64,.14);
-  background: rgba(247,248,250,.84);
-  backdrop-filter: blur(12px);
+  padding: 12px 0;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+  backdrop-filter: none;
 }
 .chapter-current-title {
   min-height: 28px;
@@ -446,6 +447,23 @@ main{padding-top:8px;padding-bottom:16px;background:#d9e1ed}
 .chapter-controls button:hover,
 .chapter-controls button:focus-visible { background: var(--blue); color: white; border-color: var(--blue); }
 @keyframes chapter-title-in { from { opacity: .25; transform: translateY(3px); } to { opacity: 1; transform: none; } }
+.topbar-actions { display: flex; align-items: center; gap: 8px; }
+.fullscreen-toggle {
+  width: 34px;
+  height: 34px;
+  border: 1px solid #9eb0c8;
+  background: transparent;
+  color: var(--navy);
+  font-size: 18px;
+  line-height: 1;
+}
+.fullscreen-toggle:hover:not(:disabled),
+.fullscreen-toggle:focus-visible:not(:disabled) { background: var(--blue); border-color: var(--blue); color: white; }
+.fullscreen-toggle:disabled { cursor: not-allowed; opacity: .45; }
+.app.mode-presentation #intro .slide-content {
+  display: grid;
+  align-items: center;
+}
 @media (max-width: 900px) {
   .chapter-rail { right: 8px; width: 54px; padding: 8px 6px; }
   .chapter-current-title { display: none; }
@@ -453,6 +471,7 @@ main{padding-top:8px;padding-bottom:16px;background:#d9e1ed}
   .chapter-dots .rail-item { justify-content: center; }
   .chapter-controls { flex-direction: column; align-items: center; }
   .chapter-controls button { width: 24px; height: 24px; }
+  .fullscreen-toggle { width: 30px; height: 30px; font-size: 16px; }
 }
 
 /* Case entry cards and result card alignment */
