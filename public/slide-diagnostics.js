@@ -67,6 +67,7 @@
     })
 
     const viewportOffset = { top: slot.top, bottom: innerHeight - slot.bottom, left: slot.left, right: innerWidth - slot.right }
+    const frameViewportOverflow = overflow(frame, { left: 0, top: 0, right: innerWidth, bottom: innerHeight })
     const slideScale = transformScale(slide)
     const scaleCount = slideScale.filter(({ transform }) => /matrix\([^)]*,[^)]*,[^)]*,/.test(transform)).length
     if (scaleCount > 1) frameIssues.push(`偵測到 ${scaleCount} 層 transform，可能存在雙重縮放`)
@@ -77,6 +78,8 @@
       frame,
       ratio,
       viewportOffset,
+      frameViewportOverflow,
+      snapOffset: frame.top - 84,
       content: content ? rect(content) : null,
       computed: { height: styles.height, minHeight: styles.minHeight, maxHeight: styles.maxHeight, overflow: styles.overflow, position: styles.position, transform: styles.transform },
       elements,
@@ -117,16 +120,25 @@
       image.addEventListener('error', resolve, { once: true })
     })))
     const slides = [...document.querySelectorAll(SLIDE_SELECTOR)]
+    const snapshots = []
     if (autoScroll) {
       for (const slide of slides) {
         slide.scrollIntoView({ block: 'start', behavior: 'auto' })
         await new Promise((resolve) => setTimeout(resolve, settleMs))
+        const snapshot = inspectSlide(slide)
+        snapshots.push(snapshot)
         console.group(`Slide ${slide.id}`)
-        console.table(inspectSlide(slide).elements.map(({ selector, rect: value, frameOverflow }) => ({ selector, left: value.left.toFixed(1), top: value.top.toFixed(1), width: value.width.toFixed(1), height: value.height.toFixed(1), frameOverflow: JSON.stringify(frameOverflow) })))
+        console.table(snapshot.elements.map(({ selector, rect: value, frameOverflow }) => ({ selector, left: value.left.toFixed(1), top: value.top.toFixed(1), width: value.width.toFixed(1), height: value.height.toFixed(1), frameOverflow: JSON.stringify(frameOverflow) })))
         console.groupEnd()
       }
     }
     const report = inspect()
+    if (snapshots.length) report.slides = snapshots
+    report.issues = report.slides.flatMap((slide) => [
+      ...slide.issues.map((issue) => ({ slide: slide.id, issue })),
+      ...(hasOverflow(slide.frameViewportOverflow) ? [{ slide: slide.id, element: 'Slide Frame', issue: 'Frame 超出可視展示區域', overflow: slide.frameViewportOverflow }] : []),
+      ...slide.elements.flatMap((element) => element.issues.map((issue) => ({ slide: slide.id, element: element.selector, issue }))),
+    ])
     console.log(`Slide diagnostics: ${report.slides.length} slides, ${report.issues.length} issues`)
     console.table(report.issues)
     if (downloadJson) download(report)
