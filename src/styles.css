@@ -407,3 +407,56 @@ main{padding-top:8px;padding-bottom:16px;background:#d9e1ed}
     margin-top: 28px;
   }
 }
+
+/* Diagnostic pass: one presentation frame rule and local slide layouts */
+.app.mode-presentation main { overflow: visible; }
+.app.mode-presentation .story-section.is-active {
+  width: min(calc(100vw - 88px), calc((100svh - 146px) * 16 / 9), var(--presentation-max-width));
+  height: auto;
+  aspect-ratio: 16 / 9;
+  overflow: visible;
+}
+.app.mode-presentation .story-section.is-active .slide-content {
+  width: 1600px;
+  height: 900px;
+  transform: scale(var(--slide-scale, 1));
+  transform-origin: top left;
+  overflow: visible;
+}
+.app.mode-presentation #overflow-action .case-grid {
+  grid-template-columns: minmax(0, .95fr) minmax(0, 1.05fr);
+  gap: 48px;
+}
+.app.mode-presentation #overflow-action .case-image {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 9;
+  object-fit: contain;
+}
+.app.mode-presentation #overflow-action .case-procedure .keyword-stack {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+.app.mode-presentation #team-result .case-bottom-keywords .keyword-stack {
+  grid-template-columns: 1fr;
+  gap: 16px;
+}
+@media (max-width: 900px) {
+  .app.mode-presentation .story-section.is-active {
+    width: min(calc(100vw - 40px), calc((100svh - 126px) * 16 / 9), var(--presentation-max-width));
+  }
+}
+@media (max-width: 620px) {
+  .app.mode-presentation .story-section.is-active {
+    width: calc(100vw - 20px);
+    height: auto;
+    aspect-ratio: 16 / 9;
+  }
+  .app.mode-presentation #overflow-action .case-grid {
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+  .app.mode-presentation #overflow-action .case-procedure .keyword-stack {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
