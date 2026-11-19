@@ -536,3 +536,13 @@ main{padding-top:8px;padding-bottom:16px;background:#d9e1ed}
     padding: 105px 20px 95px;
   }
 }
+
+/* Softer section transitions */
+.story-section {
+  opacity: .88;
+  filter: saturate(.94) blur(.15px);
+}
+.story-section.is-active {
+  opacity: 1;
+  filter: none;
+}
