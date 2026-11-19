@@ -54,6 +54,10 @@
       const elementRect = rect(element)
       const frameOverflow = overflow(elementRect, frame)
       const viewportOverflow = overflow(elementRect, { left: 0, top: 0, right: innerWidth, bottom: innerHeight })
+      const issues = []
+      if (hasOverflow(frameOverflow)) issues.push('超出 Slide Frame')
+      if (element.scrollWidth > element.clientWidth || element.scrollHeight > element.clientHeight) issues.push('元素自身內容溢出')
+      if (element.classList.contains('keyword-card') && element.textContent.trim().length > 180) issues.push('卡片文字較長，請確認可讀性')
       return {
         selector: element.className || element.tagName.toLowerCase(),
         text: element.textContent.trim().replace(/\s+/g, ' ').slice(0, 120),
@@ -62,7 +66,7 @@
         viewportOverflow,
         transforms: transformScale(element),
         contentOverflow: element.scrollWidth > element.clientWidth || element.scrollHeight > element.clientHeight,
-        issues: hasOverflow(frameOverflow) ? ['超出 Slide Frame'] : [],
+        issues,
       }
     })
 
