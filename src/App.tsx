@@ -105,7 +105,7 @@ function App() {
         return
       }
       const availableWidth = window.innerWidth - 36
-      const availableHeight = window.innerHeight - 48
+      const availableHeight = window.innerHeight - 84 - 104
       const scale = Math.min(availableWidth / 1600, availableHeight / 900, 1)
       root.style.setProperty('--presentation-scale', String(Math.max(scale, 0.1)))
     }
