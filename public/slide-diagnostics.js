@@ -89,6 +89,7 @@
 
   const inspect = () => {
     const slides = [...document.querySelectorAll(SLIDE_SELECTOR)].map(inspectSlide)
+    const scrollContainer = document.scrollingElement || document.documentElement
     const issues = slides.flatMap((slide) => slide.issues.map((issue) => ({ slide: slide.id, issue })))
       .concat(slides.flatMap((slide) => slide.elements.flatMap((element) => element.issues.map((issue) => ({ slide: slide.id, element: element.selector, issue })))))
     return {
@@ -97,7 +98,7 @@
       viewport: { width: innerWidth, height: innerHeight, scrollTop: scrollY, scrollHeight: document.documentElement.scrollHeight },
       selectors: { slide: SLIDE_SELECTOR, content: CONTENT_SELECTOR, important: IMPORTANT_SELECTOR },
       expected: { ratio: EXPECTED_RATIO, ratioTolerance: RATIO_TOLERANCE, positionTolerance: POSITION_TOLERANCE },
-      scrollContainer: { element: 'document.documentElement', scrollTop: scrollY, snapType: getComputedStyle(document.documentElement).scrollSnapType, scrollPaddingBlock: getComputedStyle(document.documentElement).scrollPaddingBlock },
+      scrollContainer: { element: scrollContainer.tagName.toLowerCase(), scrollTop: scrollContainer.scrollTop, snapType: getComputedStyle(scrollContainer).scrollSnapType, scrollPaddingBlock: getComputedStyle(scrollContainer).scrollPaddingBlock },
       stylesheetFindings: stylesheetFindings(),
       slides,
       issues,

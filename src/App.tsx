@@ -19,7 +19,8 @@ function App() {
     if (targetMode === 'presentation' && window.matchMedia('(min-width: 901px)').matches) {
       const rect = section.getBoundingClientRect()
       const top = window.scrollY + rect.top - 84
-      window.scrollTo({ top: Math.max(0, top), behavior })
+      const maxTop = document.documentElement.scrollHeight - window.innerHeight
+      window.scrollTo({ top: Math.min(Math.max(0, top), maxTop), behavior })
       return
     }
     section.scrollIntoView({ block: 'start', behavior })
@@ -78,23 +79,40 @@ function App() {
 
   useEffect(() => {
     const root = document.documentElement
+    const snapContainer = (document.scrollingElement || root) as HTMLElement
     const desktop = window.matchMedia('(min-width: 901px)')
     const applySnap = () => {
       if (mode === 'presentation' && desktop.matches) {
-        root.style.scrollSnapType = 'y mandatory'
-        root.style.scrollPaddingBlock = '84px 104px'
+        snapContainer.style.scrollSnapType = 'y mandatory'
+        snapContainer.style.scrollPaddingBlock = '84px 104px'
       } else {
-        root.style.removeProperty('scroll-snap-type')
-        root.style.removeProperty('scroll-padding-block')
+        snapContainer.style.removeProperty('scroll-snap-type')
+        snapContainer.style.removeProperty('scroll-padding-block')
       }
     }
     applySnap()
     desktop.addEventListener('change', applySnap)
     return () => {
       desktop.removeEventListener('change', applySnap)
-      root.style.removeProperty('scroll-snap-type')
-      root.style.removeProperty('scroll-padding-block')
+      snapContainer.style.removeProperty('scroll-snap-type')
+      snapContainer.style.removeProperty('scroll-padding-block')
     }
+  }, [mode])
+
+  useEffect(() => {
+    if (mode !== 'presentation' || !window.matchMedia('(min-width: 901px)').matches) return
+    const correctSnapPosition = () => {
+      const sections = chapters.map((chapter) => sectionRefs.current[chapter.id]).filter(Boolean) as HTMLElement[]
+      const target = sections.reduce<HTMLElement | null>((closest, section) => {
+        if (!closest) return section
+        return Math.abs(section.getBoundingClientRect().top - 84) < Math.abs(closest.getBoundingClientRect().top - 84) ? section : closest
+      }, null)
+      if (!target) return
+      const offset = target.getBoundingClientRect().top - 84
+      if (Math.abs(offset) > 2) window.scrollBy({ top: offset, behavior: 'auto' })
+    }
+    window.addEventListener('scrollend', correctSnapPosition)
+    return () => window.removeEventListener('scrollend', correctSnapPosition)
   }, [mode])
 
   useEffect(() => {

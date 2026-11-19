@@ -277,7 +277,7 @@ main{padding-top:8px;padding-bottom:16px;background:#d9e1ed}
     height: auto;
     display: block;
     overflow: visible;
-    scroll-snap-type: y mandatory;
+    scroll-snap-type: none;
     scroll-padding-block: var(--presentation-top-safe) var(--presentation-bottom-safe);
   }
 
