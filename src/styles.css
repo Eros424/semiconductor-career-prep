@@ -460,3 +460,79 @@ main{padding-top:8px;padding-bottom:16px;background:#d9e1ed}
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
+
+/* Restore the original vertical presentation flow */
+.app.mode-presentation {
+  min-height: auto;
+  background: transparent;
+}
+.app.mode-presentation main {
+  min-height: 0;
+  height: auto;
+  display: block;
+  overflow: visible;
+  scroll-snap-type: y proximity;
+}
+.app.mode-presentation .story-section,
+.app.mode-presentation .story-section.is-active {
+  display: block;
+  width: auto;
+  height: auto;
+  min-height: 100svh;
+  aspect-ratio: auto;
+  overflow: visible;
+  margin: 0 auto 18px;
+  padding: clamp(120px, 12vw, 170px) clamp(24px, 8vw, 132px) clamp(70px, 8vw, 112px);
+  scroll-snap-align: center;
+  transform: none;
+}
+.app.mode-presentation .story-section.is-active .slide-content {
+  width: auto;
+  height: auto;
+  transform: none;
+  overflow: visible;
+}
+.app.mode-presentation .story-section.is-active .case-grid,
+.app.mode-presentation .story-section.is-active .hero-grid {
+  width: 100%;
+  max-width: 1440px;
+}
+.app.mode-presentation .story-section.is-active .case-bottom-keywords {
+  width: 100%;
+  max-width: 1280px;
+}
+.app.mode-presentation #team-result .slide-content {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(300px, 420px);
+  column-gap: clamp(32px, 5vw, 80px);
+  align-items: start;
+}
+.app.mode-presentation #team-result .case-grid {
+  grid-column: 1;
+  grid-row: 1;
+}
+.app.mode-presentation #team-result .case-bottom-keywords {
+  grid-column: 2;
+  grid-row: 1;
+  margin: 0;
+}
+.app.mode-presentation #team-result .case-bottom-keywords .keyword-stack {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+}
+@media (max-width: 900px) {
+  .app.mode-presentation .story-section,
+  .app.mode-presentation .story-section.is-active {
+    min-height: auto;
+    padding: 120px 20px 95px;
+  }
+  .app.mode-presentation #team-result .slide-content { display: block; }
+  .app.mode-presentation #team-result .case-bottom-keywords { margin-top: 28px; }
+}
+@media (max-width: 620px) {
+  .app.mode-presentation .story-section,
+  .app.mode-presentation .story-section.is-active {
+    padding: 105px 20px 95px;
+  }
+}
