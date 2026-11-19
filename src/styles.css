@@ -480,6 +480,56 @@ main{padding-top:8px;padding-bottom:16px;background:#d9e1ed}
   .chapter-controls button { width: 24px; height: 24px; }
 }
 
+/* Case entry cards and result card alignment */
+.intro-panel { max-width: 430px; padding: 22px 0; }
+.case-entry {
+  position: relative;
+  display: grid;
+  grid-template-columns: 48px 1fr 24px;
+  grid-template-rows: auto auto;
+  column-gap: 14px;
+  width: 100%;
+  min-height: 112px;
+  margin: 10px 0;
+  padding: 18px 16px;
+  border: 1px solid #9eb0c8;
+  border-left: 5px solid var(--blue);
+  background: #fff;
+  color: var(--navy);
+  text-align: left;
+  box-shadow: 0 8px 18px rgba(11,30,64,.08);
+  transition: transform .2s ease, border-color .2s ease, box-shadow .2s ease, background-color .2s ease;
+}
+.case-entry-team { border-left-color: var(--rust); }
+.case-entry strong { grid-row: span 2; color: var(--blue); font-family: var(--mono); font-size: 14px; }
+.case-entry-team strong { color: var(--rust); }
+.case-entry span { font-family: var(--display); font-size: 25px; font-weight: 600; line-height: 1; }
+.case-entry small { margin-top: 7px; color: var(--muted); font-size: 12px; line-height: 1.35; }
+.case-entry i { grid-column: 3; grid-row: 1 / span 2; align-self: center; color: var(--blue); font-size: 21px; font-style: normal; }
+.case-entry-team i { color: var(--rust); }
+.case-entry:hover { transform: translateY(-3px); border-color: var(--blue); box-shadow: 0 12px 24px rgba(11,30,64,.14); }
+.case-entry-team:hover { border-color: var(--rust); }
+.case-entry:focus-visible { outline: 3px solid var(--gold); outline-offset: 3px; }
+
+.app.mode-presentation .case-entry { min-height: 112px; }
+.app.mode-presentation #overflow-task .case-bottom-keywords,
+.app.mode-presentation #overflow-result .case-bottom-keywords,
+.app.mode-presentation #team-task .case-bottom-keywords { align-self: end; margin-bottom: 32px; }
+.app.mode-presentation #team-result .case-bottom-keywords .keyword-card {
+  min-height: 96px;
+  padding: 16px 18px !important;
+  border: 1px solid #9eb0c8 !important;
+  border-left: 5px solid var(--blue) !important;
+  border-radius: 10px;
+  background: #fff !important;
+  box-shadow: 0 8px 18px rgba(11,30,64,.08) !important;
+}
+.app.mode-presentation #team-result .case-bottom-keywords .keyword-card:nth-child(2) { border-left-color: var(--rust) !important; }
+.app.mode-presentation #team-result .case-bottom-keywords .keyword-card:nth-child(3) { border-left-color: var(--blue) !important; }
+.app.mode-presentation #team-result .case-bottom-keywords .keyword-card::after { display: none; }
+.app.mode-presentation #team-result .case-bottom-keywords .keyword-card > span { color: var(--blue) !important; }
+.app.mode-presentation #team-result .case-bottom-keywords .keyword-card:nth-child(2) > span { color: var(--rust) !important; }
+
 /* Applied option C: classic typography and stacked story cards */
 :root {
   --display: 'Cormorant Garamond', Georgia, serif;
