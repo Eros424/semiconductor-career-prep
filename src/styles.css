@@ -399,11 +399,85 @@ main{padding-top:8px;padding-bottom:16px;background:#d9e1ed}
 /* Softer section transitions */
 .story-section {
   opacity: .88;
-  filter: saturate(.94) blur(.15px);
+  filter: saturate(.94);
 }
 .story-section.is-active {
   opacity: 1;
   filter: none;
+}
+
+/* Floating chapter navigation */
+.app.mode-presentation .chapter-rail { display: flex; }
+.chapter-rail {
+  right: 18px;
+  width: 128px;
+  gap: 12px;
+  align-items: stretch;
+  padding: 12px 10px;
+  border: 1px solid rgba(11,30,64,.14);
+  background: rgba(247,248,250,.84);
+  backdrop-filter: blur(12px);
+}
+.chapter-current-title {
+  min-height: 28px;
+  color: var(--navy);
+  font-family: var(--mono);
+  font-size: 10px;
+  line-height: 1.25;
+  letter-spacing: .05em;
+  text-transform: uppercase;
+  animation: chapter-title-in .25s ease both;
+}
+.chapter-dots {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+}
+.chapter-dots .rail-item {
+  justify-content: flex-end;
+  min-height: 14px;
+}
+.chapter-dots .rail-item span {
+  order: 2;
+  min-width: 20px;
+  color: var(--muted);
+  font-family: var(--mono);
+  font-size: 9px;
+  text-align: right;
+}
+.chapter-dots .rail-item i {
+  order: 1;
+  width: 7px;
+  height: 7px;
+  background: #9aa8ba;
+}
+.chapter-dots .rail-item.active span { color: var(--blue); }
+.chapter-dots .rail-item.active i { width: 22px; background: var(--blue); }
+.chapter-controls {
+  display: flex;
+  justify-content: flex-end;
+  gap: 6px;
+  padding-top: 10px;
+  border-top: 1px solid rgba(11,30,64,.14);
+}
+.chapter-controls button {
+  width: 26px;
+  height: 26px;
+  border: 1px solid #9eb0c8;
+  background: transparent;
+  color: var(--navy);
+  font-size: 14px;
+}
+.chapter-controls button:hover,
+.chapter-controls button:focus-visible { background: var(--blue); color: white; border-color: var(--blue); }
+@keyframes chapter-title-in { from { opacity: .25; transform: translateY(3px); } to { opacity: 1; transform: none; } }
+@media (max-width: 900px) {
+  .chapter-rail { right: 8px; width: 54px; padding: 8px 6px; }
+  .chapter-current-title { display: none; }
+  .chapter-dots .rail-item span { display: none; }
+  .chapter-dots .rail-item { justify-content: center; }
+  .chapter-controls { flex-direction: column; align-items: center; }
+  .chapter-controls button { width: 24px; height: 24px; }
 }
 
 /* Applied option C: classic typography and stacked story cards */
