@@ -290,7 +290,7 @@ main{padding-top:8px;padding-bottom:16px;background:#d9e1ed}
     aspect-ratio: auto;
     overflow: visible;
     margin: 0 auto 18px;
-    scroll-snap-align: center;
+    scroll-snap-align: start;
     scroll-snap-stop: normal;
     transform: none;
     animation: none;

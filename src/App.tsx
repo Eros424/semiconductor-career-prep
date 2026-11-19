@@ -18,10 +18,7 @@ function App() {
   const scrollToSection = (section: HTMLElement, targetMode: Mode, behavior: ScrollBehavior) => {
     if (targetMode === 'presentation' && window.matchMedia('(min-width: 901px)').matches) {
       const rect = section.getBoundingClientRect()
-      const availableHeight = window.innerHeight - 160
-      const top = rect.height > availableHeight
-        ? window.scrollY + rect.top - 84
-        : window.scrollY + rect.top + (rect.height - window.innerHeight) / 2
+      const top = window.scrollY + rect.top - 84
       window.scrollTo({ top: Math.max(0, top), behavior })
       return
     }
