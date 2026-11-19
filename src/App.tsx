@@ -13,13 +13,27 @@ function App() {
   const [capability, setCapability] = useState<keyof typeof capabilityDetails>('systems')
   const sectionRefs = useRef<Record<string, HTMLElement | null>>({})
   const navigating = useRef(false)
+  const activeChapterRef = useRef(0)
+
+  const scrollToSection = (section: HTMLElement, targetMode: Mode, behavior: ScrollBehavior) => {
+    if (targetMode === 'presentation' && window.matchMedia('(min-width: 901px)').matches) {
+      const rect = section.getBoundingClientRect()
+      const availableHeight = window.innerHeight - 160
+      const top = rect.height > availableHeight
+        ? window.scrollY + rect.top - 84
+        : window.scrollY + rect.top + (rect.height - window.innerHeight) / 2
+      window.scrollTo({ top: Math.max(0, top), behavior })
+      return
+    }
+    section.scrollIntoView({ block: 'start', behavior })
+  }
 
   const changeMode = (nextMode: Mode) => {
     setMode(nextMode)
+    activeChapterRef.current = activeChapter
     window.requestAnimationFrame(() => {
-      if (nextMode === 'scroll') {
-        sectionRefs.current[chapters[activeChapter]?.id]?.scrollIntoView({ block: 'start', behavior: 'auto' })
-      }
+      const section = sectionRefs.current[chapters[activeChapter]?.id]
+      if (section) scrollToSection(section, nextMode, 'auto')
     })
   }
 
@@ -29,43 +43,72 @@ function App() {
   }
 
   useEffect(() => {
-    const frame = sectionRefs.current[chapters[activeChapter]?.id]
-    const content = frame?.querySelector<HTMLElement>('.slide-content')
-    if (mode === 'presentation' && frame && content) {
-      const fit = () => {
-        const widthScale = frame.clientWidth / Math.max(content.scrollWidth, 1600)
-        const heightScale = frame.clientHeight / Math.max(content.scrollHeight, 900)
-        frame.style.setProperty('--slide-scale', String(Math.min(widthScale, heightScale, 1)))
-      }
-      fit()
-      const observer = new ResizeObserver(fit)
-      observer.observe(frame)
-      observer.observe(content)
-      return () => observer.disconnect()
-    }
-  }, [activeChapter, mode])
-
-  useEffect(() => {
     const sections = chapters.map((chapter) => sectionRefs.current[chapter.id]).filter(Boolean) as HTMLElement[]
-    const observer = new IntersectionObserver((entries) => {
+    let frame = 0
+    const updateActiveChapter = () => {
+      frame = 0
       if (navigating.current) return
-      const visible = entries.filter((entry) => entry.isIntersecting).sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0]
-      if (visible) setActiveChapter(chapters.findIndex((chapter) => chapter.id === visible.target.id))
-    }, { threshold: [0.3, 0.6] })
-    sections.forEach((section) => observer.observe(section))
+      const center = window.innerHeight / 2
+      let closestIndex = activeChapterRef.current
+      let closestDistance = Number.POSITIVE_INFINITY
+      sections.forEach((section, index) => {
+        const rect = section.getBoundingClientRect()
+        const distance = Math.abs(rect.top + rect.height / 2 - center)
+        if (distance < closestDistance) {
+          closestDistance = distance
+          closestIndex = index
+        }
+      })
+      if (closestIndex !== activeChapterRef.current) {
+        activeChapterRef.current = closestIndex
+        setActiveChapter(closestIndex)
+      }
+    }
+    const onScroll = () => {
+      if (!frame) frame = window.requestAnimationFrame(updateActiveChapter)
+    }
+    window.addEventListener('scroll', onScroll, { passive: true })
+    window.addEventListener('resize', onScroll)
     const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
     if (!reduceMotion) sections.forEach((section) => gsap.fromTo(section.querySelectorAll('.reveal'), { opacity: 0, y: 18 }, { opacity: 1, y: 0, duration: .6, stagger: .04, ease: 'power2.out', scrollTrigger: { trigger: section, start: 'top 80%', once: true } }))
-    return () => { observer.disconnect(); ScrollTrigger.getAll().forEach((trigger) => trigger.kill()) }
+    return () => {
+      window.removeEventListener('scroll', onScroll)
+      window.removeEventListener('resize', onScroll)
+      if (frame) window.cancelAnimationFrame(frame)
+      ScrollTrigger.getAll().forEach((trigger) => trigger.kill())
+    }
   }, [])
+
+  useEffect(() => {
+    const root = document.documentElement
+    const desktop = window.matchMedia('(min-width: 901px)')
+    const applySnap = () => {
+      if (mode === 'presentation' && desktop.matches) {
+        root.style.scrollSnapType = 'y mandatory'
+        root.style.scrollPaddingBlock = '84px 104px'
+      } else {
+        root.style.removeProperty('scroll-snap-type')
+        root.style.removeProperty('scroll-padding-block')
+      }
+    }
+    applySnap()
+    desktop.addEventListener('change', applySnap)
+    return () => {
+      desktop.removeEventListener('change', applySnap)
+      root.style.removeProperty('scroll-snap-type')
+      root.style.removeProperty('scroll-padding-block')
+    }
+  }, [mode])
 
   const goToChapter = (index: number) => {
     const chapter = chapters[index]
     const section = chapter && sectionRefs.current[chapter.id]
     if (!section) return
+    activeChapterRef.current = index
     setActiveChapter(index)
     navigating.current = true
-    const top = section.getBoundingClientRect().top + window.scrollY - 48
-    window.scrollTo({ top, behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' })
+    const behavior = window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth'
+    scrollToSection(section, mode, behavior)
     window.setTimeout(() => { navigating.current = false }, 850)
   }
 
