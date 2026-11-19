@@ -163,31 +163,16 @@ main{scroll-snap-type:y proximity;background:#d9e1ed;padding:18px 18px 30px}
 @media(max-width:900px){.case-copy{transform:translateY(-10px)}}
 @media(max-width:620px){.case-copy{transform:none}}
 
-/* Bottom outline and lighter chapter transitions */
+/* Story framing */
 main{padding-top:8px;padding-bottom:16px;background:#d9e1ed}
 .story-section{border-radius:16px;margin-bottom:10px}
 .story-section:after{border-radius:16px}
 .section-dark:before,.section-blue:before,.section-paper:before,.section-cream:before{background:linear-gradient(to bottom,rgba(255,255,255,.10),transparent 18%,transparent 82%,rgba(0,0,0,.08))}
 .section-paper:before,.section-cream:before{background:linear-gradient(to bottom,rgba(255,255,255,.42),transparent 18%,transparent 82%,rgba(11,30,64,.04))}
-.case-bottom-keywords{width:100%;max-width:1280px;margin:clamp(22px,4vw,46px) auto 0}
-.case-bottom-keywords .keyword-stack{display:flex;align-items:stretch;border-top:1px solid var(--line);border-bottom:1px solid var(--line);list-style:none;margin:0;padding:0}
-.case-bottom-keywords .keyword-card{display:block;flex:1;min-width:0;margin:0!important;padding:13px 16px 14px!important;border:0!important;border-left:1px solid var(--line);box-shadow:none!important;background:transparent!important}
-.case-bottom-keywords .keyword-card:first-child{border-left:0}
-.case-bottom-keywords .keyword-card>span{display:block;padding:0;margin:0 0 8px;font-family:var(--mono);font-size:10px;line-height:1;color:var(--blue)}
-.section-dark .case-bottom-keywords .keyword-card>span{color:var(--gold)}
-.case-bottom-keywords .keyword-card strong{display:block;font-size:12px;line-height:1.2}
-.case-bottom-keywords .keyword-card p{font-size:11px;line-height:1.4;margin:6px 0 0;max-width:none}
-.section-paper .case-bottom-keywords .keyword-card p,.section-cream .case-bottom-keywords .keyword-card p{color:#304663}
-.section-dark .case-bottom-keywords .keyword-card p{color:#d8e4f3}
-.section-blue .case-bottom-keywords .keyword-card p{color:#f2f7ff}
-.case-bottom-keywords .side-label{display:none}
 .result-readout{animation:readout-in .28s ease both}
 @keyframes readout-in{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:none}}
 .result-buttons button{transition:background-color .2s ease,border-color .2s ease,color .2s ease,transform .2s ease}
 .result-buttons button.active{transform:translateY(-2px)}
-@media(max-width:900px){.case-bottom-keywords .keyword-card{padding-left:12px!important;padding-right:12px!important}}
-@media(max-width:620px){.case-bottom-keywords .keyword-stack{display:grid;grid-template-columns:1fr 1fr}.case-bottom-keywords .keyword-card:nth-child(odd){border-left:0}.case-bottom-keywords .keyword-card:nth-child(n+3){border-top:1px solid var(--line)}.story-section{border-radius:12px}.story-section:after{border-radius:12px}}
-
 /* Right-side visual with result procedure below */
 .case-section{align-items:flex-start}
 .case-grid{align-items:start}
@@ -216,16 +201,6 @@ main{padding-top:8px;padding-bottom:16px;background:#d9e1ed}
 @media(max-width:900px){.case-image{height:auto}.case-procedure .keyword-card{padding-left:13px!important;padding-right:13px!important}}
 @media(max-width:900px){.case-section.has-bottom-procedure .case-grid{grid-template-columns:1fr}}
 @media(max-width:620px){.case-procedure .keyword-stack{grid-template-columns:1fr}.case-procedure .keyword-card{min-height:98px}}
-
-/* Three-step story result rail */
-.case-bottom-keywords{margin-top:clamp(28px,4vw,52px)}
-.case-bottom-keywords .keyword-stack{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1px;border:1px solid var(--blue);border-radius:14px;overflow:hidden;background:var(--blue);list-style:none;margin:0;padding:0}
-.case-bottom-keywords .keyword-card{display:flex;flex-direction:column;justify-content:flex-start;min-width:0;min-height:112px;margin:0!important;padding:18px 20px 17px!important;border:0!important;border-left:0!important;border-radius:0;background:#fff!important;box-shadow:none!important}
-.case-bottom-keywords .keyword-card>span{display:block;margin:0 0 14px;padding:0;color:var(--blue)!important;font-family:var(--mono);font-size:11px;line-height:1;letter-spacing:.08em}
-.case-bottom-keywords .keyword-card strong{display:block;color:var(--navy);font-family:var(--display);font-size:16px;line-height:1.18;letter-spacing:-.02em}
-.case-bottom-keywords .keyword-card p{margin:9px 0 0;color:#304663!important;font-family:Inter,'Noto Sans TC',sans-serif;font-size:12px;line-height:1.45;max-width:28em}
-@media(max-width:900px){.case-bottom-keywords .keyword-card{min-height:104px;padding-left:15px!important;padding-right:15px!important}}
-@media(max-width:620px){.case-bottom-keywords .keyword-stack{grid-template-columns:1fr}.case-bottom-keywords .keyword-card{min-height:88px;padding:15px 16px!important}}
 
 /* Flexible flow layout for bottom keyword blocks */
 .case-section.has-bottom-procedure {
@@ -544,19 +519,16 @@ main{padding-top:8px;padding-bottom:16px;background:#d9e1ed}
   line-height: .88;
 }
 .case-text,
-.case-bottom-keywords .keyword-card p,
 .case-procedure .keyword-card p {
   font-family: 'Source Sans 3', 'Helvetica Neue', sans-serif;
   line-height: 1.6;
 }
-.case-bottom-keywords .keyword-stack,
 .case-procedure .keyword-stack {
   grid-template-columns: 1fr;
   gap: 10px;
   border-radius: 0;
   background: transparent;
 }
-.case-bottom-keywords .keyword-card,
 .case-procedure .keyword-card {
   min-height: 88px;
   padding: 15px 18px !important;
@@ -566,21 +538,18 @@ main{padding-top:8px;padding-bottom:16px;background:#d9e1ed}
   background: #fff !important;
   box-shadow: 3px 3px 0 rgba(36,101,197,.1) !important;
 }
-.case-bottom-keywords .keyword-card > span,
 .case-procedure .keyword-card > span,
 .result-buttons button span {
   font-family: var(--mono);
   font-size: 11px;
   letter-spacing: .12em;
 }
-.case-bottom-keywords .keyword-card strong,
 .case-procedure .keyword-card strong {
   font-family: var(--display);
   font-size: 20px;
   line-height: 1;
   letter-spacing: -.025em;
 }
-.case-bottom-keywords .keyword-card p,
 .case-procedure .keyword-card p {
   font-size: 13px;
   line-height: 1.45;
@@ -610,9 +579,60 @@ main{padding-top:8px;padding-bottom:16px;background:#d9e1ed}
   color: #edf3fb;
 }
 @media (max-width: 620px) {
-  .case-bottom-keywords .keyword-card,
   .case-procedure .keyword-card {
     min-height: 84px;
     padding: 14px 16px !important;
   }
+}
+
+/* Clean three-card groups for the three bottom-card slides */
+#overflow-task .case-bottom-keywords,
+#overflow-result .case-bottom-keywords,
+#team-task .case-bottom-keywords {
+  width: 100%;
+  max-width: none;
+  margin: 0;
+}
+#overflow-task .case-bottom-keywords .keyword-stack,
+#overflow-result .case-bottom-keywords .keyword-stack,
+#team-task .case-bottom-keywords .keyword-stack {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  overflow: visible;
+}
+#overflow-task .case-bottom-keywords .keyword-card,
+#overflow-result .case-bottom-keywords .keyword-card,
+#team-task .case-bottom-keywords .keyword-card {
+  min-width: 0;
+  min-height: 0;
+  margin: 0;
+  padding: 16px 18px;
+  border: 1px solid #9eb0c8;
+  border-left: 4px solid var(--blue);
+  border-radius: 10px;
+  background: #fff;
+  box-shadow: 0 6px 14px rgba(11,30,64,.08);
+  overflow: visible;
+}
+#overflow-result .case-bottom-keywords .keyword-card {
+  border-color: rgba(255,255,255,.52);
+  border-left-color: var(--gold);
+  background: rgba(11,30,64,.2);
+}
+#overflow-task .case-bottom-keywords .keyword-card > span,
+#team-task .case-bottom-keywords .keyword-card > span { color: var(--blue); }
+#overflow-result .case-bottom-keywords .keyword-card > span { color: var(--gold); }
+#overflow-result .case-bottom-keywords .keyword-card strong,
+#overflow-result .case-bottom-keywords .keyword-card p { color: #fff; }
+@media (max-width: 620px) {
+  #overflow-task .case-bottom-keywords .keyword-stack,
+  #overflow-result .case-bottom-keywords .keyword-stack,
+  #team-task .case-bottom-keywords .keyword-stack { grid-template-columns: 1fr; }
 }
