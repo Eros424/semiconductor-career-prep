@@ -384,6 +384,10 @@ main{padding-top:8px;padding-bottom:16px;background:#d9e1ed}
 /* Floating chapter navigation */
 .app.mode-presentation .chapter-rail { display: flex; }
 .chapter-rail {
+  --nav-text: var(--navy);
+  --nav-muted: #6f8098;
+  --nav-active: var(--blue);
+  --nav-focus: var(--gold);
   right: 18px;
   width: 128px;
   gap: 12px;
@@ -393,16 +397,22 @@ main{padding-top:8px;padding-bottom:16px;background:#d9e1ed}
   background: transparent;
   box-shadow: none;
   backdrop-filter: none;
+  color: var(--nav-text);
+  transition: color .2s ease;
 }
+.chapter-rail[data-nav-theme="dark"] { --nav-text: #f4f7fb; --nav-muted: #b6c7dd; --nav-active: var(--gold); --nav-focus: #ffe7a3; }
+.chapter-rail[data-nav-theme="blue"] { --nav-text: #fff; --nav-muted: #d9e8fb; --nav-active: var(--gold); --nav-focus: #ffe7a3; }
+.chapter-rail[data-nav-theme="light"] { --nav-text: var(--navy); --nav-muted: #6f8098; --nav-active: var(--blue); --nav-focus: var(--gold); }
 .chapter-current-title {
   min-height: 28px;
-  color: var(--navy);
+  color: var(--nav-text);
   font-family: var(--mono);
   font-size: 10px;
   line-height: 1.25;
   letter-spacing: .05em;
   text-transform: uppercase;
-  animation: chapter-title-in .25s ease both;
+  animation: chapter-title-in .2s ease both;
+  transition: color .2s ease;
 }
 .chapter-dots {
   display: flex;
@@ -416,7 +426,7 @@ main{padding-top:8px;padding-bottom:16px;background:#d9e1ed}
 .chapter-dots .rail-item span {
   order: 2;
   min-width: 20px;
-  color: var(--muted);
+  color: var(--nav-muted);
   font-family: var(--mono);
   font-size: 9px;
   text-align: right;
@@ -425,10 +435,12 @@ main{padding-top:8px;padding-bottom:16px;background:#d9e1ed}
   order: 1;
   width: 7px;
   height: 7px;
-  background: #9aa8ba;
+  background: var(--nav-muted);
+  transition: width .2s ease, background-color .2s ease;
 }
-.chapter-dots .rail-item.active span { color: var(--blue); }
-.chapter-dots .rail-item.active i { width: 22px; background: var(--blue); }
+.chapter-dots .rail-item.active span { color: var(--nav-active); }
+.chapter-dots .rail-item.active i { width: 22px; background: var(--nav-active); }
+.chapter-dots .rail-item:focus-visible { outline: 2px solid var(--nav-focus); outline-offset: 3px; }
 .chapter-controls {
   display: flex;
   justify-content: flex-end;

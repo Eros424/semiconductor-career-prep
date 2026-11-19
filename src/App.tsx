@@ -7,6 +7,7 @@ import { capabilityDetails, chapters, content, getSlide } from './data/story'
 gsap.registerPlugin(ScrollTrigger)
 type Mode = 'scroll' | 'presentation'
 const presentationTitles = content.navigationTitles
+const navigationThemes = ['light', 'light', 'dark', 'blue', 'light', 'dark', 'light']
 const overflowTask = getSlide('overflow-task')
 const overflowAction = getSlide('overflow-action')
 const overflowResult = getSlide('overflow-result')
@@ -181,7 +182,7 @@ function App() {
   return <div className={`app mode-${mode}`}>
     <a className="skip-link" href="#story">Skip to story</a>
     <header className={`topbar ${activeChapter > 0 ? 'is-compact' : ''}`}><a className="brand" href="#intro" onClick={(event) => { event.preventDefault(); goToChapter(0) }}><span className="brand-mark">RPB</span><span>Engineering portfolio</span></a><div className="topbar-actions"><div className="mode-toggle" role="group" aria-label="View mode"><button type="button" className={mode === 'scroll' ? 'active' : ''} onClick={() => changeMode('scroll')}>Scroll</button><button type="button" className={mode === 'presentation' ? 'active' : ''} onClick={() => changeMode('presentation')}>Presentation </button></div><button className="fullscreen-toggle" type="button" onClick={toggleFullscreen} disabled={!document.fullscreenEnabled} aria-label={isFullscreen ? 'Exit fullscreen' : 'Enter fullscreen'} title={document.fullscreenEnabled ? (isFullscreen ? 'Exit fullscreen' : 'Enter fullscreen') : 'Fullscreen is not supported in this browser'}>{isFullscreen ? '×' : '⛶'}</button></div></header>
-    <nav className={`chapter-rail ${mode === 'presentation' ? 'is-presentation' : ''}`} aria-label="Chapter navigation">
+    <nav className={`chapter-rail ${mode === 'presentation' ? 'is-presentation' : ''}`} data-nav-theme={navigationThemes[activeChapter]} aria-label="Chapter navigation">
       <div key={activeChapter} className="chapter-current-title" aria-live="polite">{presentationTitles[activeChapter]}</div>
       <div className="chapter-dots">{chapters.map((chapter, index) => <button key={chapter.id} className={index === activeChapter ? 'rail-item active' : 'rail-item'} onClick={() => goToChapter(index)} aria-label={`Go to ${presentationTitles[index]}`} aria-current={index === activeChapter ? 'step' : undefined}><span>{chapter.number}</span><i /></button>)}</div>
     </nav>
